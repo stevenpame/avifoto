@@ -25,7 +25,7 @@ const PerfilController = {
             const datos = {};
             const camposPermitidos = [
                 'nombre_completo', 'email', 'telefono',
-                'barrio', 'direccion', 'ocupacion', 'institucion'
+                'barrio', 'direccion', 'ocupacion', 'institucion', 'foto'
             ];
             camposPermitidos.forEach(campo => {
                 if (req.body[campo] !== undefined) {
