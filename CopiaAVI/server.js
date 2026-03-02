@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express")
 const app = express()
 const authRoutes = require("./routes/authRoutes")
@@ -24,6 +25,14 @@ app.use(cors({
 
 app.use(express.json())
 app.use('/api',authRoutes,PreguntasRoutes,RespuestaRoutes,ProgramasRoutes,PerfilRoutes,AspiranteRoutes,AdminRoutes, EstadisticasRoutes, CentrosRoutes)
+
+app.use((err, req, res, next) => {
+  console.error("Error no controlado:", err)
+  if (err?.message?.includes("Solo se permiten")) {
+    return res.status(400).json({ mensaje: "Solo se permiten imagenes" })
+  }
+  return res.status(500).json({ mensaje: "Error interno del servidor" })
+})
 
 
 

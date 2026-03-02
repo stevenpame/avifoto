@@ -5,15 +5,17 @@ const streamifier = require('streamifier');
 const PerfilController = {
 
     async obtenerPerfil(req, res) {
-        const idAspirante = req.user.id;
-
-        PerfilService.traerPerfil(idAspirante)
-            .then(perfil => {
-                if (!perfil) {
-                    return res.status(404).json({ mensaje: "Usuario no encontrado" });
-                }
-                res.json(perfil);
-            });
+        try {
+            const idAspirante = req.user.id;
+            const perfil = await PerfilService.traerPerfil(idAspirante);
+            if (!perfil) {
+                return res.status(404).json({ mensaje: "Usuario no encontrado" });
+            }
+            res.json(perfil);
+        } catch (error) {
+            console.error("Error al obtener perfil del aspirante:", error);
+            res.status(500).json({ mensaje: "Error al obtener el perfil" });
+        }
     },
 
     
